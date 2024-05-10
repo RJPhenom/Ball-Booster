@@ -18,16 +18,26 @@ public class Boost : MonoBehaviour
     {
         // The player is the ball, but the thruster is manipulating it
         GameObject thruster = GameObject.Find("Thruster");
-        Player stats = thruster.GetComponent<Player>();
-        stats.moveSpeed *= multiplier;
+        // 
+        if (thruster != null)
+        {
+            Player stats = thruster.GetComponent<Player>();
+            if (stats != null)
+            {
+                stats.moveSpeed *= multiplier;
 
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
+                GetComponent<MeshRenderer>().enabled = false;
+                GetComponent<Collider>().enabled = false;
 
-        yield return new WaitForSeconds(duration);
+                yield return new WaitForSeconds(duration);
 
-        stats.moveSpeed /= multiplier;
-
+                stats.moveSpeed /= multiplier;
+            }
+        }
+        else
+        {
+            Debug.Log("Thruster failed to be found!");
+        }
         Destroy(gameObject);
     }
 }
