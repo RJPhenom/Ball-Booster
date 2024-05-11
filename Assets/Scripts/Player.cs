@@ -24,13 +24,18 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // Inputs
-        HandleMovementInput();
 
         // Transofrm handling
         ThrusterFollowBall();
+    }
+
+    // FixedUpdate is called on every physics tick
+    void FixedUpdate()
+    {
+        // Inputs
+        HandleMovementInput();
     }
 
     void HandleMovementInput()

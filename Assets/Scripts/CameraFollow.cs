@@ -16,8 +16,12 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Get relative direction from ball to world zero (spherefloor center) and get adjusted camera pos
         Vector3 dirToWorldZero = (ball.transform.position - Vector3.zero).normalized;
+        Vector3 adjustedPos = ball.transform.position + dirToWorldZero * -offset;
 
-        transform.position = ball.transform.position + dirToWorldZero * offset;
+        // Add z offset & update
+        transform.position = adjustedPos + Vector3.back * offset;
+        transform.LookAt(ball.transform.position);
     }
 }

@@ -624,8 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1119269544}
-  floor: {fileID: 1892833259}
-  offset: 1000
+  offset: 10
 --- !u!1 &1119269544 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6658634041791577536, guid: 5ee31fe341240184ba75307c1b1da678, type: 3}
@@ -737,11 +736,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1892833259 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4789720081403378231, guid: c97cd0ff3a7a2cb44ae96dc18b6c8d74, type: 3}
-  m_PrefabInstance: {fileID: 741273946}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
