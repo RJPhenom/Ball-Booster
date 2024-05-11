@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    GameObject floor;
+    public GameObject floor;
     SphereCollider floorCollider;
     float radius;
 
@@ -28,7 +28,7 @@ public class Spawner : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Spawn(boostPad);
+            Spawn(boostPickup);
         }
     }
 
@@ -42,9 +42,9 @@ public class Spawner : MonoBehaviour
 
     Vector3 randomPoint()
     {
-        float x = Random.value * 100;
-        float y = Random.value * 100;
-        float z = Random.value * 100;
+        float x = Random.Range(-100, 100);
+        float y = Random.Range(-100, 100);
+        float z = Random.Range(-100, 100);
 
         Vector3 randomVec = new Vector3(x, y, z);
         Vector3 randomDir = (randomVec - Vector3.zero).normalized;
@@ -55,9 +55,18 @@ public class Spawner : MonoBehaviour
 
     void rotateToMatchSphereFloor(GameObject obj)
     {
-        Vector3 worldDir = Vector3.zero - obj.transform.position;
-        float rot = Random.Range(0, 360);
+        Vector3 upDir = (Vector3.zero - obj.transform.position).normalized;
+        Debug.LogWarning(upDir);
 
-        obj.transform.Rotate(worldDir, rot);
+        Plane localPlane = new Plane(upDir, obj.transform.position);
+        Vector3 planePoint = localPlane.ClosestPointOnPlane(randomPoint());
+
+        Vector3 fwdDir = (planePoint - obj.transform.position).normalized;
+        Debug.LogWarning(fwdDir);
+
+        Quaternion rot = new Quaternion();
+        rot.SetLookRotation(fwdDir, upDir);
+
+        obj.transform.rotation = rot;
     }
 }
