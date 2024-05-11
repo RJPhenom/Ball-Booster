@@ -13,10 +13,14 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private Vector3 thrustDir;
 
+    // Startup Values
+    private Vector3 origin;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = ball.GetComponent<Rigidbody>();
+        origin = transform.position;
     }
 
     // Update is called once per frame
@@ -76,8 +80,20 @@ public class Player : MonoBehaviour
     void ThrusterFollowBall()
     {
         Quaternion newRot = Quaternion.LookRotation(rb.velocity);
-        
+
         transform.position = ball.transform.position;
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, rotSpeed);
+    }
+
+    // Updates the Player's position back to its start position
+    void ResetPosition()
+    {
+        ball.transform.position = origin;
+        ThrusterFollowBall();
+    }
+
+    public void KillPlayer()
+    {
+        ResetPosition();
     }
 }
