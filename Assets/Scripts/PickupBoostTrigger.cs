@@ -24,6 +24,7 @@ public class PickupBoost : MonoBehaviour
             Player stats = thruster.GetComponent<Player>();
             if (stats != null)
             {
+                float baseSpeed = stats.moveSpeed;
                 stats.moveSpeed *= multiplier;
 
                 GetComponent<MeshRenderer>().enabled = false;
@@ -31,7 +32,11 @@ public class PickupBoost : MonoBehaviour
 
                 yield return new WaitForSeconds(duration);
 
-                stats.moveSpeed /= multiplier;
+                // Reset speed back to base if it has been increased
+                if (stats.moveSpeed > baseSpeed)
+                {
+                    stats.moveSpeed = baseSpeed;
+                }
             }
         }
         else
