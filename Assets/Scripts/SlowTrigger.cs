@@ -6,7 +6,7 @@ public class SlowTrigger : MonoBehaviour
 {
 
     public float slowLimit = 0.25f;
-    public float slowMagnitude = 0.25f;
+    public float slowMagnitude = 0.375f;
 
     private void OnTriggerStay(Collider other)
     {

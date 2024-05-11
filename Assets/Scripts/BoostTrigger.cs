@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BoostTrigger : MonoBehaviour
 {
-
     public float forceMultiplier = 5f;
 
     private Vector3 direction;
@@ -16,12 +15,14 @@ public class BoostTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player") { 
+        if (other.gameObject.tag == "Player")
+        {
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.AddForce(direction * forceMultiplier, ForceMode.Impulse);
             }
+
         }
     }
 }
