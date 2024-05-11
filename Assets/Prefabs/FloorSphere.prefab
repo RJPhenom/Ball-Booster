@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b29011febac244e4eb04da046f7ea5f2, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b29011febac244e4eb04da046f7ea5f2, type: 3}
       propertyPath: m_Name
       value: FloorSphere
@@ -70,14 +74,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b29011febac244e4eb04da046f7ea5f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5346877812905589154}
+      addedObject: {fileID: 8017815368750642898}
   m_SourcePrefab: {fileID: 100100000, guid: b29011febac244e4eb04da046f7ea5f2, type: 3}
 --- !u!1 &4789720081403378231 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b29011febac244e4eb04da046f7ea5f2, type: 3}
   m_PrefabInstance: {fileID: 5672821222704367462}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &5346877812905589154
+--- !u!64 &8017815368750642898
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

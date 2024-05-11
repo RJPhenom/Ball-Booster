@@ -5,26 +5,23 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public GameObject ball;
-    public GameObject floor;
-
     public float offset;
-
-    private Collider floorCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        floorCollider = floor.GetComponent<Collider>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 floorPoint = floorCollider.ClosestPoint(ball.transform.position);
-        Vector3 dirToFloor = (ball.transform.position - floorPoint).normalized;
-        Debug.Log(floorPoint + ":::" + dirToFloor);
-        Vector3 adjustedPos = ball.transform.position + (dirToFloor * -offset);
+        // Get relative direction from ball to world zero (spherefloor center) and get adjusted camera pos
+        Vector3 dirToWorldZero = (ball.transform.position - Vector3.zero).normalized;
+        Vector3 adjustedPos = ball.transform.position + dirToWorldZero * -offset;
 
-        transform.position = ball.transform.position + new Vector3(0, 10, -10);
+        // Add z offset & update
+        transform.position = adjustedPos + Vector3.back * offset;
+        transform.LookAt(ball.transform.position);
     }
 }
