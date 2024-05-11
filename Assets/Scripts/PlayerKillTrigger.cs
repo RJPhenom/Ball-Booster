@@ -21,5 +21,9 @@ public class PlayerKillTrigger : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            Debug.Log("Thruster failed to be found!");
+        }
     }
 }
