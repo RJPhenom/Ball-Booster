@@ -41,6 +41,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1654505186811942799}
     m_Modifications:
+    - target: {fileID: 1747690508473874250, guid: 32be3a48f2621554093b9c3362a2dbd1, type: 3}
+      propertyPath: ball
+      value: 
+      objectReference: {fileID: 53596428922607904}
     - target: {fileID: 3819958806803384855, guid: 32be3a48f2621554093b9c3362a2dbd1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -85,8 +89,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thruster
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1747690508473874250, guid: 32be3a48f2621554093b9c3362a2dbd1, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -153,6 +156,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ee31fe341240184ba75307c1b1da678, type: 3}
+--- !u!1 &53596428922607904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6658634041791577536, guid: 5ee31fe341240184ba75307c1b1da678, type: 3}
+  m_PrefabInstance: {fileID: 6689624227842499808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7762082997022900114 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3994170148599634802, guid: 5ee31fe341240184ba75307c1b1da678, type: 3}
