@@ -9,7 +9,9 @@ public class Player : MonoBehaviour
     public GameObject ball;
     public float moveSpeed;
     public float rotSpeed;
+
     private Rigidbody rb;
+    private Vector3 thrustDir;
 
     // Startup Values
     private Vector3 origin;
@@ -40,6 +42,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             MoveForward();
+            ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -48,38 +51,47 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             MoveLeft();
+            ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.D))
         {
             MoveRight();
+            ThrusterRotate();
         }
     }
 
     void MoveForward()
     {
-        rb.AddForce(Vector3.forward * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * moveSpeed, ForceMode.VelocityChange);
+        thrustDir.z = 1;
     }
 
     void MoveBackward()
     {
         rb.AddForce(-Vector3.forward * moveSpeed, ForceMode.VelocityChange);
+        thrustDir.z = -1;
     }
 
     void MoveLeft()
     {
-        rb.AddForce(-Vector3.right * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(-transform.right * moveSpeed, ForceMode.VelocityChange);
+        thrustDir.x = -1;
     }
 
     void MoveRight()
     {
-        rb.AddForce(Vector3.right * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(transform.right * moveSpeed, ForceMode.VelocityChange);
+        thrustDir.x = 1;
     }
 
     void ThrusterFollowBall()
     {
-        Quaternion newRot = Quaternion.LookRotation(rb.velocity);
-
         transform.position = ball.transform.position;
+    }
+
+    void ThrusterRotate()
+    {
+        Quaternion newRot = Quaternion.LookRotation(rb.velocity);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, rotSpeed);
     }
 
