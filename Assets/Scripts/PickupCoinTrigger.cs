@@ -13,7 +13,10 @@ public class PickupCoinTrigger : MonoBehaviour
         if (other.gameObject.tag == "Player") {
             // Get global score and increment it
             GameManager gm = FindAnyObjectByType<GameManager>();
-            gm.increaseScore(scoreValue);
+            if (gm != null)
+            {
+                gm.increaseScore(scoreValue);
+            }
             // Delete coin
             Destroy(gameObject);
         }
