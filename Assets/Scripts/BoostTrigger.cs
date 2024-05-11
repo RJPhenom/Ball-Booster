@@ -2,42 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boost : MonoBehaviour
+public class BoostTrigger : MonoBehaviour
 {
-    public float multiplier = 1.5f;
-    public float duration = 5f;
+    public float forceMultiplier = 5f;
 
-    private void OnTriggerEnter(Collider other)
+    private Vector3 direction;
+
+    private void Start()
     {
-        if (other.CompareTag("Player")) {
-            StartCoroutine(Pickup(other));
-        }
+        direction = transform.forward;
     }
 
-    IEnumerator Pickup(Collider player)
+    private void OnTriggerStay(Collider other)
     {
-        // The player is the ball, but the thruster is manipulating it
-        GameObject thruster = GameObject.Find("Thruster");
-        // 
-        if (thruster != null)
+        if (other.gameObject.tag == "Player")
         {
-            Player stats = thruster.GetComponent<Player>();
-            if (stats != null)
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                stats.moveSpeed *= multiplier;
-
-                GetComponent<MeshRenderer>().enabled = false;
-                GetComponent<Collider>().enabled = false;
-
-                yield return new WaitForSeconds(duration);
-
-                stats.moveSpeed /= multiplier;
+                rb.AddForce(direction * forceMultiplier, ForceMode.Impulse);
             }
+
         }
-        else
-        {
-            Debug.Log("Thruster failed to be found!");
-        }
-        Destroy(gameObject);
     }
 }
