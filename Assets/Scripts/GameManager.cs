@@ -6,14 +6,37 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
+    // Game settings
+    public int complexity; // determines number of pads and stuff spawned at start
 
     private int score;
     private bool scoreUpdated = true;
+    Spawner spawner;
+
+    // Ticker
+    float interval = 1; // seconds between ticks
+    int ticks = 0;
+
+    private void Awake()
+    {
+        spawner = GetComponent<Spawner>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         score = 0;
+
+        for (int i = 0; i < complexity; i++)
+        {
+            spawner.SpawnRandomNoPickups();
+
+            if (i % 2 == 0)
+            {
+                spawner.SpawnRandomPickup();
+            }
+        }
+
     }
 
     void Update()
@@ -25,6 +48,20 @@ public class GameManager : MonoBehaviour
             Debug.Log("Score increased to " + score.ToString());
             scoreUpdated = true;
         }
+
+        tick();
+    }
+
+    void OnTick()
+    {
+        spawner.SpawnRandomPickup();
+
+        if (ticks % 5 == 0)
+        {
+            spawner.SpawnRandomObstacle();
+        }
+
+        Debug.Log("Tick " + ticks + " at time " + Time.time);
     }
 
     public void increaseScore(int value) {
@@ -32,4 +69,14 @@ public class GameManager : MonoBehaviour
         scoreUpdated = false;
     }
 
+    void tick()
+    {
+        int mod = (int) Mathf.Floor(Time.time);
+
+        if (mod > ticks + interval)
+        {
+            ticks++;
+            OnTick();
+        }
+    }
 }

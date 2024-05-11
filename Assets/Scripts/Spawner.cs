@@ -15,9 +15,13 @@ public class Spawner : MonoBehaviour
     public GameObject teslaWall;
     public GameObject coin;
 
+    public GameObject[] floorPads;
+    public GameObject[] pickups;
+    public GameObject[] obstacles;
+
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         floorCollider = floor.GetComponent<SphereCollider>();
         radius = floorCollider.radius;
@@ -38,6 +42,61 @@ public class Spawner : MonoBehaviour
 
         spawned.transform.position = randomPoint();
         rotateToMatchSphereFloor(spawned);
+
+        Debug.Log("Spawned new " + spawned.name + " at " + spawned.transform.position + " and time " + Time.time);
+    }
+
+    public void SpawnRandomObject()
+    {
+        int i = Random.Range(0, 2);
+
+        switch (i) {
+            case 0:
+                SpawnRandomPad();
+                break;
+
+            case 1:
+                SpawnRandomPickup();
+                break;
+
+            case 2:
+                SpawnRandomObstacle();
+                break;
+        }     
+    }
+
+    public void SpawnRandomNoPickups()
+    {
+        int i = Random.Range(0, 1);
+
+        switch (i)
+        {
+            case 0:
+                SpawnRandomPad();
+                break;
+
+            case 1:
+                SpawnRandomObstacle();
+                break;
+        }
+    }
+
+    public void SpawnRandomPad()
+    {
+        int i = Random.Range(0, floorPads.Length);
+        Spawn(floorPads[i]);
+    }
+
+    public void SpawnRandomPickup()
+    {
+        int i = Random.Range(0, pickups.Length);
+        Spawn(pickups[i]);
+    }
+
+    public void SpawnRandomObstacle()
+    {
+        int i = Random.Range(0, obstacles.Length);
+        Spawn(obstacles[i]);
     }
 
     Vector3 randomPoint()
@@ -56,13 +115,11 @@ public class Spawner : MonoBehaviour
     void rotateToMatchSphereFloor(GameObject obj)
     {
         Vector3 upDir = (Vector3.zero - obj.transform.position).normalized;
-        Debug.LogWarning(upDir);
 
         Plane localPlane = new Plane(upDir, obj.transform.position);
         Vector3 planePoint = localPlane.ClosestPointOnPlane(randomPoint());
 
         Vector3 fwdDir = (planePoint - obj.transform.position).normalized;
-        Debug.LogWarning(fwdDir);
 
         Quaternion rot = new Quaternion();
         rot.SetLookRotation(fwdDir, upDir);
