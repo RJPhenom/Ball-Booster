@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     // Game settings
     public int complexity; // determines number of pads and stuff spawned at start
 
+    public GameObject scoreTextArea;
+
     private int score;
-    private bool scoreUpdated = true;
+    private bool scoreUpdatePending = false;
     Spawner spawner;
 
     // Ticker
@@ -42,11 +46,19 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Get UI element and update text to reflect new score
-        if (!scoreUpdated)
+        if (!scoreUpdatePending)
         {
             // Apply update to score
-            Debug.Log("Score increased to " + score.ToString());
-            scoreUpdated = true;
+            if (scoreTextArea != null)
+            {
+                TextMeshProUGUI scoreText = scoreTextArea.GetComponent<TextMeshProUGUI>();
+                scoreText.SetText(score.ToString());
+            }
+            else
+            {
+                Debug.Log("Score Text has not been attached!");
+            }
+            scoreUpdatePending = true;
         }
 
         tick();
@@ -66,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     public void increaseScore(int value) {
         score += value;
-        scoreUpdated = false;
+        scoreUpdatePending = false;
     }
 
     void tick()
