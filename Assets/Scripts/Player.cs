@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public float rotSpeed;
 
     private Rigidbody rb;
-    private Vector3 thrustDir;
 
     // Assets
     public GameObject thrusterVFX;
@@ -87,25 +86,21 @@ public class Player : MonoBehaviour
     void MoveForward()
     {
         rb.AddForce(transform.forward * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.z = 1;
     }
 
     void MoveBackward()
     {
         rb.AddForce(-Vector3.forward * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.z = -1;
     }
 
     void MoveLeft()
     {
         rb.AddForce(-transform.right * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.x = -1;
     }
 
     void MoveRight()
     {
         rb.AddForce(transform.right * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.x = 1;
     }
 
     void ThrusterFollowBall()
