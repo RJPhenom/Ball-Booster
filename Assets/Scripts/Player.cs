@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     // Assets
     public GameObject thrusterVFX;
+    public AudioSource thrusterSFX;
 
     // Startup Values
     private Vector3 origin;
@@ -72,6 +73,15 @@ public class Player : MonoBehaviour
         }
 
         thrusterVFX.SetActive(inputActive);
+        if (inputActive && !thrusterSFX.isPlaying)
+        {
+            thrusterSFX.Play();
+        }
+
+        else if (!inputActive)
+        {
+            thrusterSFX.Stop();
+        }
     }
 
     void MoveForward()

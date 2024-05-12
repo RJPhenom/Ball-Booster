@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerKillTrigger : MonoBehaviour
 {
+    public AudioSource sfx;
+
     private void OnTriggerEnter(Collider other)
     {
         // The player's ball collided
@@ -17,6 +19,7 @@ public class PlayerKillTrigger : MonoBehaviour
                 Player props = thruster.GetComponent<Player>();
                 if (props != null)
                 {
+                    sfx.Play();
                     props.KillPlayer();
                 }
             }
