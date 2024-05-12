@@ -1642,7 +1642,7 @@ MonoBehaviour:
   complexity: 100
   pickupFactor: 1
   padFactor: 5
-  obstalceFactor: 2
+  obstalceFactor: 5
   scoreTextArea: {fileID: 1780672524}
   resultsScoreTextArea: {fileID: 154990132}
 --- !u!4 &1386966460
