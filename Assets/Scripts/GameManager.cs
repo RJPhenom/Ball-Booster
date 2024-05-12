@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int obstalceFactor; // determines qty of pickup spawns, lower is better
 
     public GameObject scoreTextArea;
+    public GameObject resultsScoreTextArea;
 
     private int score;
     private bool scoreUpdatePending = false;
@@ -99,5 +101,27 @@ public class GameManager : MonoBehaviour
             ticks++;
             OnTick();
         }
+    }
+
+    public void ReloadGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowResults()
+    {
+        UIManager um = FindObjectOfType<UIManager>();
+        Time.timeScale = 0;
+        um.scoreUI.SetActive(false);
+        // Get the results panel's text and set it the score
+        TextMeshProUGUI scoreText = resultsScoreTextArea.GetComponent<TextMeshProUGUI>();
+        scoreText.SetText(score.ToString());
+        um.resultsUI.SetActive(true);
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
