@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 
     void MoveBackward()
     {
-        rb.AddForce(-Vector3.forward * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(-transform.forward * moveSpeed, ForceMode.VelocityChange);
         thrustDir.z = -1;
     }
 
