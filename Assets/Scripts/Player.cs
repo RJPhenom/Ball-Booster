@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // Plane for movement voodoo
+    public GameObject planarVoodoo;
+    private GameObject childVoodoo;
+
     // Members
     public GameObject ball;
     public float moveSpeed;
     public float rotSpeed;
-
     private Rigidbody rb;
 
     // Assets
@@ -20,6 +23,9 @@ public class Player : MonoBehaviour
     // Startup Values
     private Vector3 origin;
 
+    // thruster visual
+    Vector3 thrustDir;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +33,7 @@ public class Player : MonoBehaviour
         origin = transform.position;
 
         thrusterVFX.SetActive(false);
+        childVoodoo = planarVoodoo.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -34,11 +41,15 @@ public class Player : MonoBehaviour
     {
         // Transofrm handling
         ThrusterFollowBall();
+
+        planarVoodoo.transform.LookAt(ball.transform.position);
     }
 
     // FixedUpdate is called on every physics tick
     void FixedUpdate()
     {
+        thrustDir = Vector3.zero;
+
         // Inputs
         HandleMovementInput();
     }
@@ -57,6 +68,7 @@ public class Player : MonoBehaviour
         {
             inputActive = true;
             MoveBackward();
+            ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -85,22 +97,26 @@ public class Player : MonoBehaviour
 
     void MoveForward()
     {
-        rb.AddForce(transform.forward * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(-childVoodoo.transform.forward * moveSpeed, ForceMode.VelocityChange);
+        thrustDir += -childVoodoo.transform.forward;
     }
 
     void MoveBackward()
     {
-        rb.AddForce(-Vector3.forward * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(childVoodoo.transform.forward * moveSpeed, ForceMode.VelocityChange);
+        thrustDir += childVoodoo.transform.forward;
     }
 
     void MoveLeft()
     {
-        rb.AddForce(-transform.right * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(-childVoodoo.transform.right * moveSpeed, ForceMode.VelocityChange);
+        thrustDir += -childVoodoo.transform.right;
     }
 
     void MoveRight()
     {
-        rb.AddForce(transform.right * moveSpeed, ForceMode.VelocityChange);
+        rb.AddForce(childVoodoo.transform.right * moveSpeed, ForceMode.VelocityChange);
+        thrustDir += childVoodoo.transform.right;
     }
 
     void ThrusterFollowBall()
@@ -110,7 +126,7 @@ public class Player : MonoBehaviour
 
     void ThrusterRotate()
     {
-        Quaternion newRot = Quaternion.LookRotation(rb.velocity);
+        Quaternion newRot = Quaternion.LookRotation(thrustDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRot, rotSpeed);
     }
 
@@ -128,5 +144,13 @@ public class Player : MonoBehaviour
         {
             gm.ShowResults();
         }
+    }
+
+    float GetAngleofBallUpWall()
+    {
+        Vector3 downVec = Vector3.down;
+        Vector3 ballVec = ball.transform.position;
+
+        return Vector3.Angle(downVec, ballVec);
     }
 }

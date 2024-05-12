@@ -12,7 +12,7 @@ public class BounceTrigger : MonoBehaviour
         {
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null) {
-                rb.AddForce(Vector3.up * bounceMultiplier, ForceMode.Impulse);
+                rb.AddForce(transform.up * bounceMultiplier, ForceMode.Impulse);
             }
         }
     }
