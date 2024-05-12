@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     {
         spawner.SpawnRandomPickup();
 
-        if (ticks % 5 == 0)
+        if (ticks % 1000 == 0)
         {
             spawner.SpawnRandomObstacle();
         }
