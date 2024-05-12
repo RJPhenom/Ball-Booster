@@ -60,8 +60,6 @@ public class GameManager : MonoBehaviour
         {
             spawner.SpawnRandomObstacle();
         }
-
-        Debug.Log("Tick " + ticks + " at time " + Time.time);
     }
 
     public void increaseScore(int value) {

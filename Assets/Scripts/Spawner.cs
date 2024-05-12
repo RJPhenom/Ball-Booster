@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour
         spawned.transform.position = randomPoint();
         rotateToMatchSphereFloor(spawned);
 
-        Debug.Log("Spawned new " + spawned.name + " at " + spawned.transform.position + " and time " + Time.time);
+        //Debug.Log("Spawned new " + spawned.name + " at " + spawned.transform.position + " and time " + Time.time);
     }
 
     public void SpawnRandomObject()

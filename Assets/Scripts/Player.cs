@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private Vector3 thrustDir;
 
+    // Assets
+    public GameObject thrusterVFX;
+
     // Startup Values
     private Vector3 origin;
 
@@ -21,6 +25,8 @@ public class Player : MonoBehaviour
     {
         rb = ball.GetComponent<Rigidbody>();
         origin = transform.position;
+
+        thrusterVFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,25 +45,33 @@ public class Player : MonoBehaviour
 
     void HandleMovementInput()
     {
+        bool inputActive = false;
+
         if (Input.GetKey(KeyCode.W))
         {
+            inputActive = true;
             MoveForward();
             ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.S))
         {
+            inputActive = true;
             MoveBackward();
         }
         if (Input.GetKey(KeyCode.A))
         {
+            inputActive = true;
             MoveLeft();
             ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.D))
         {
+            inputActive = true;
             MoveRight();
             ThrusterRotate();
         }
+
+        thrusterVFX?.SetActive(inputActive);
     }
 
     void MoveForward()
