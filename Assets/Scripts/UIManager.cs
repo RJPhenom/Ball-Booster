@@ -26,7 +26,10 @@ public class UIManager : MonoBehaviour
         {
             pausePanel.SetActive(false);
         }
-        resumePanel.SetActive(false);
+        if (resumePanel != null)
+        {
+            resumePanel.SetActive(false);
+        }
     }
 
     // Update is called once per frame
