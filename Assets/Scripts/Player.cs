@@ -104,6 +104,10 @@ public class Player : MonoBehaviour
 
     public void KillPlayer()
     {
-        ResetPosition();
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.ShowResults();
+        }
     }
 }
