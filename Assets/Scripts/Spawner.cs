@@ -19,12 +19,16 @@ public class Spawner : MonoBehaviour
     public GameObject[] pickups;
     public GameObject[] obstacles;
 
+    float padRadius;
 
     // Start is called before the first frame update
     void Awake()
     {
         floorCollider = floor.GetComponent<SphereCollider>();
         radius = floorCollider.radius;
+
+        SphereCollider padCollider = jumpPad.GetComponent<SphereCollider>();
+        padRadius = padCollider.radius;
     }
 
     // Update is called once per frame
@@ -38,12 +42,15 @@ public class Spawner : MonoBehaviour
 
     void Spawn(GameObject obj)
     {
-        GameObject spawned = Instantiate(obj);
-
-        spawned.transform.position = randomPoint();
-        rotateToMatchSphereFloor(spawned);
-
-        //Debug.Log("Spawned new " + spawned.name + " at " + spawned.transform.position + " and time " + Time.time);
+        Vector3 spawnLocation = randomPoint();
+        // Check if that spawn location is already occupied by other colliders/
+        if (!Physics.CheckSphere(spawnLocation, padRadius, 9))
+        {
+            GameObject spawned = Instantiate(obj);
+            spawned.transform.position = spawnLocation;
+            rotateToMatchSphereFloor(spawned);
+            //Debug.Log("Spawned new " + spawned.name + " at " + spawned.transform.position + " and time " + Time.time);
+        }
     }
 
     public void SpawnRandomObject()
