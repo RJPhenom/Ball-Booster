@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class PickupCoinTrigger : MonoBehaviour
 {
+    public GameObject gfx;
+    public AudioSource sfx;
 
+    public int rotSpeed;
     public int scoreValue = 1;
+
+    private void Update()
+    {
+        transform.Rotate(0, rotSpeed, 0);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,8 +25,20 @@ public class PickupCoinTrigger : MonoBehaviour
             {
                 gm.increaseScore(scoreValue);
             }
-            // Delete coin
-            Destroy(gameObject);
+            // Play sfx then delete coin coin
+            sfx.Play();
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
+            StartCoroutine(killSelfAfterNoise());
         }
+    }
+
+    IEnumerator killSelfAfterNoise()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }

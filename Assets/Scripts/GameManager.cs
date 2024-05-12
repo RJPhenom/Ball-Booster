@@ -10,7 +10,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // Game settings
-    public int complexity; // determines number of pads and stuff spawned at start
+    public int complexity; // determines number spawn ticks occur on gamestart
+    public int pickupFactor; // determines qty of pickup spawns, lower is better
+    public int padFactor; // determines qty of pickup spawns, lower is better
+    public int obstalceFactor; // determines qty of pickup spawns, lower is better
 
     public GameObject scoreTextArea;
     public GameObject resultsScoreTextArea;
@@ -35,11 +38,19 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < complexity; i++)
         {
-            spawner.SpawnRandomNoPickups();
-
-            if (i % 2 == 0)
+            if (i % pickupFactor == 0)
             {
                 spawner.SpawnRandomPickup();
+            }
+
+            if (i % padFactor == 0)
+            {
+                spawner.SpawnRandomPad();
+            }
+
+            if (i % obstalceFactor == 0)
+            {
+                spawner.SpawnRandomObstacle();
             }
         }
 
@@ -74,8 +85,6 @@ public class GameManager : MonoBehaviour
         {
             spawner.SpawnRandomObstacle();
         }
-
-        Debug.Log("Tick " + ticks + " at time " + Time.time);
     }
 
     public void increaseScore(int value) {

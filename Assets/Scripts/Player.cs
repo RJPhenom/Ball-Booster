@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,10 @@ public class Player : MonoBehaviour
     public float rotSpeed;
 
     private Rigidbody rb;
-    private Vector3 thrustDir;
+
+    // Assets
+    public GameObject thrusterVFX;
+    public AudioSource thrusterSFX;
 
     // Startup Values
     private Vector3 origin;
@@ -21,6 +25,8 @@ public class Player : MonoBehaviour
     {
         rb = ball.GetComponent<Rigidbody>();
         origin = transform.position;
+
+        thrusterVFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,31 +45,47 @@ public class Player : MonoBehaviour
 
     void HandleMovementInput()
     {
+        bool inputActive = false;
+
         if (Input.GetKey(KeyCode.W))
         {
+            inputActive = true;
             MoveForward();
             ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.S))
         {
+            inputActive = true;
             MoveBackward();
         }
         if (Input.GetKey(KeyCode.A))
         {
+            inputActive = true;
             MoveLeft();
             ThrusterRotate();
         }
         if (Input.GetKey(KeyCode.D))
         {
+            inputActive = true;
             MoveRight();
             ThrusterRotate();
+        }
+
+        thrusterVFX.SetActive(inputActive);
+        if (inputActive && !thrusterSFX.isPlaying)
+        {
+            thrusterSFX.Play();
+        }
+
+        else if (!inputActive)
+        {
+            thrusterSFX.Stop();
         }
     }
 
     void MoveForward()
     {
         rb.AddForce(transform.forward * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.z = 1;
     }
 
     void MoveBackward()
@@ -75,13 +97,11 @@ public class Player : MonoBehaviour
     void MoveLeft()
     {
         rb.AddForce(-transform.right * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.x = -1;
     }
 
     void MoveRight()
     {
         rb.AddForce(transform.right * moveSpeed, ForceMode.VelocityChange);
-        thrustDir.x = 1;
     }
 
     void ThrusterFollowBall()
