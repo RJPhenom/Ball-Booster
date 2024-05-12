@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
             ThrusterRotate();
         }
 
-        thrusterVFX?.SetActive(inputActive);
+        thrusterVFX.SetActive(inputActive);
     }
 
     void MoveForward()
