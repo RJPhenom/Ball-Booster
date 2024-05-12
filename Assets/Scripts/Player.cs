@@ -139,6 +139,7 @@ public class Player : MonoBehaviour
 
     public void KillPlayer()
     {
+        thrusterSFX.Stop();
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
